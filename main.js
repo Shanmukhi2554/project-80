@@ -1,49 +1,109 @@
-var names_of_people = [];
-    
-function submit()
-{
-    var GuestName = document.getElementById("name1").value;
-	names_of_people.push(GuestName);
-	console.log(GuestName);    
-    console.log(names_of_people);
-    var lenght_of_name = names_of_people.length;
-    console.log(lenght_of_name);
-	document.getElementById("display_name").innerHTML=names_of_people.toString();
-   }
+canvas = document.getElementById('myCanvas');
+ctx = canvas.getContext("2d"); 
+greencar_width = 75;
+greencar_height = 100;
+background_image = "parkingLot.jpg";
+greencar_image = "car2.png";
+greencar_x = 5;
+greencar_y = 255;
 
+function add() {
+	background_imgTag = new Image();
+	background_imgTag.onload = uploadBackground;
+	background_imgTag.src = background_image;
 
-
-function show()
-{
-	var i= names_of_people.join("<br>");
-	console.log(names_of_people);
-	document.getElementById("p1").innerHTML=i.toString();
-	document.getElementById("display_name").style.display="block";
-	id= sort_button
-	}
-
-
-function sorting()
-	{
-		names_of_people
-		.sort();
-		var i= names_of_people.join("<br>");
-		console.log(names_of_people);		
-		document.getElementById("sorted").innerHTML=i.toString();
-		}
-
-
-function searching()
-{
-	var s= document.getElementById("s1").value;
-	var found=0;
-	var j;
-	for(j=0; j<names_of_people.length; j++)
-		{
-			if(s==names_of_people[j]){
-				found=found+1;
-			}	
-		}
-	document.getElementById("p2").innerHTML="name found "+found+" time/s";
-	console.log("found name "+found+" time/s");
+	greencar_imgTag = new Image();
+	greencar_imgTag.onload = uploadgreencar;
+	greencar_imgTag.src = greencar_image;
 }
+
+function uploadBackground() {
+	ctx.drawImage(background_imgTag, 0, 0, canvas.width, canvas.height);
+
+}
+
+function uploadgreencar() {
+	ctx.drawImage(greencar_imgTag, greencar_x, greencar_y, greencar_width, greencar_height);
+
+	
+}
+
+
+
+
+function up()
+{
+	if(greencar_y>=0)
+    {
+        greencar_y = greencar_y - 10;
+        console.log("When up arrow is pressed, x = " + greencar_x + " | y = " +greencar_y);
+        uploadBackground();
+        uploadgreencar();
+    }
+}
+
+function down()
+{
+	function down(){
+        if(greencar_y<=500)
+        {
+            greencar_y = greencar_y + 10;
+            console.log("When down arrow is pressed, x = " + greencar_x + " | y = " +greencar_y);
+            uploadBackground();
+            uploadgreencar();
+        }
+}
+}
+
+function left()
+{
+	if(greencar_x>=0)
+        {
+             greencar_x = greencar_x - 10;
+             console.log("When when arrow is pressed, x = " + greencar_x + " | y = " +greencar_y);
+             uploadBackground();
+             uploadgreencar();
+        }
+}
+
+function right(){
+	if(greencar_x<=700)
+	{
+		greencar_x = greencar_x + 10;
+		console.log("When right arrow is pressed, x = " + greencar_x + " | y = " +greencar_y);
+		uploadBackground();
+		uploadgreencar();
+	}
+}
+
+window.addEventListener("keydown", my_keydown);
+
+function my_keydown(e)
+{
+	keyPressed = e.keyCode;
+	console.log(keyPressed);
+		if(keyPressed == '38')
+		{
+			up();
+			console.log("up");
+		}
+	
+		if(keyPressed == '40')
+		{
+			down();
+			console.log("down");
+		}
+		
+		if(keyPressed == '37')
+		{
+			left();
+			console.log("left");
+		}
+	
+		if(keyPressed == '39')
+		{
+			right();
+			console.log("right");
+		}
+		
+    }	
